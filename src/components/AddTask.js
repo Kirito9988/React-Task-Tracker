@@ -28,11 +28,11 @@ const AddTask = ({onAdd}) => {
             <input type="text" value={text} onChange={(e) => setText(e.target.value)} />
         </div>
         <div className="form-control">
-            <label htmlFor="">d and t</label>
+            <label htmlFor="">date and time</label>
             <input type="text" value={day} onChange={(e) => setDay(e.target.value)} />
         </div>
         <div className="form-control form-control-check">
-            <label htmlFor="">set r</label>
+            <label htmlFor="">set reminder</label>
             <input type="checkbox" value={reminder} onChange={(e) => setReminder(e.currentTarget.checked)} />
         </div>
         <input type="submit" value="save" className="btn btn-block" />
