@@ -1,0 +1,25 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "text": "Food Shopping",
+      "day": "Sept 20th at 1:00pm",
+      "reminder": true,
+      "status": "Active"
+    },
+    {
+      "id": 2,
+      "text": "Meeting At School",
+      "day": "Sept 21th at 2:00pm",
+      "reminder": false,
+      "status": "Completed"
+    },
+    {
+      "text": "Meeting",
+      "day": "Friday",
+      "reminder": false,
+      "id": 3,
+      "status": "Active"
+    }
+  ]
+}
