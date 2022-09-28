@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import Header from './components/Header';
 import Tasks from './components/Tasks';
@@ -6,8 +5,14 @@ import { useState, useEffect } from 'react';
 import AddTask from './components/AddTask';
 import Footer from './components/Footer';
 import About from './components/About';
-import {BrowserRouter  , json, Route , Routes } from 'react-router-dom';
+import {BrowserRouter , Route , Routes } from 'react-router-dom';
+import Completed from './components/Completed';
+import { Link } from "react-router-dom"
+
+
 function App() {
+ const [showAddTask, setShowAddTask] = useState(false)
+
   const [tasks, setTasks] = useState(
     []
  )
@@ -22,7 +27,6 @@ function App() {
       getTasks();
     },[])
 
-    //fetch
     const fetchTasks = async() => {
       let url1 = "http://localhost:5001/tasks"
       const res = await fetch(url1)
@@ -31,14 +35,8 @@ function App() {
       console.log(data)
       return data
     }
- //addtask
+
 const addTask = async (task) => {
-  console.log(task);
-  // const id = Math.floor(Math.random() * 10000 ) + 1
-  // const newTask = { id, ...task }
-  // setTasks([...tasks, newTask])
-
-
   const res = await fetch( `http://localhost:5001/tasks`, {
     method: 'POST',
     headers: {
@@ -53,8 +51,6 @@ const addTask = async (task) => {
 setTasks ([...tasks, data])
 } 
 
-
-//delete
  const deleteTask = async(id) => {
     console.log('delete' , id)
     await fetch(`http://localhost:5001/tasks/${id}`,
@@ -67,9 +63,52 @@ setTasks ([...tasks, data])
     }))
  }
 
-//toggle
+ const onCheck = async(id) => {
+    console.log('oncheckkkkk' , id)
+
+    let taski = null;
+    for ( let i =0; i<tasks.length; i++ ) {
+      if ( tasks[i].id === id ){
+        taski = JSON.parse(JSON.stringify(tasks[i])) ;
+      }
+    }
+    taski.status==='active'? taski.status='completed': taski.status='active';
+    
+    const res = await fetch(`http://localhost:5001/tasks/${id}`,
+    {
+      method: 'PUT',
+      headers: {
+        'Content-type' : 'application/json'
+      },
+
+      body: JSON.stringify(taski)
+    }
+
+    )
+
+    const data = await res.json()
+    console.log (data)
+    setTasks(tasks.map((task)=>{
+      if ( task.id === id ) {
+        let st = null;
+
+        console.log("statusssss",task.text, task.status);
+        if (task.status === "active"){
+          st = "completed"
+        }
+        else {
+          st = "active"
+        }
+        console.log("sttttt", st)
+        return { ...task, status: st }
+      }
+      else {
+        return task
+      }
+    }))
+}
+
 const toggleReminder = (id) => {
-  console.log("dkkkk")
   setTasks(tasks.map((task)=>{
     if (task.id === id )
      {
@@ -81,20 +120,81 @@ const toggleReminder = (id) => {
   }))
 }
 
-  return (
+const findLen1 = (tasks) => {
+  let c = 0
+  for (let i = 0 ; i<tasks.length ; i++){
+    if (tasks[i].status==="active")
+    {
+      c=c+1;
+    }
+  }
+  return c;
+}
 
-    <div className="container">
-      <Header title="Task Tracker"  />
-      <AddTask  onAdd={addTask} />
-      <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
-      <Footer  />
+const findLen2 = (tasks) => {
+  let c = 0
+  for (let i = 0 ; i<tasks.length ; i++){
+    if (tasks[i].status==="completed")
+    {
+      c=c+1;
+    }
+  }
+  return c;
+}
 
+
+return (
 <BrowserRouter>
+    <div className="container">
+     <Header onAdd ={() => setShowAddTask(!showAddTask)}
+      showAdd ={showAddTask}/>
 <Routes>
-<Route path="/about" element={<About />} />
+          
+    <Route path="/"  exact element={   <>
+                  {showAddTask && <AddTask onAdd={addTask} />}
+              
+                 {findLen1(tasks.length > 0) ? ( 
+                 <>
+                 <Tasks
+                tasks={tasks}
+                onDelete={deleteTask}
+                onToggle={toggleReminder}
+                onCheck={onCheck} /><Link to='/completed'>Completed
+                </Link></>
+                ) : (<> <Tasks
+                  tasks={tasks}
+                  onDelete={deleteTask}
+                  onToggle={toggleReminder}
+                  onCheck={onCheck}
+                />
+                <Link to='/completed'>Completed</Link> </>
+              )}
+              </>} />
+    <Route path="/about" exact element={<About />} />
+
+      <Route path="/completed" exact element= 
+           {findLen2(tasks.length > 0)  ? ( <Completed
+                    tasks={tasks}
+                    onDelete={deleteTask}
+                    onToggle={toggleReminder}
+                    onCheck={onCheck}
+                  />
+                  
+                ) : (<> <Completed
+                  tasks={tasks}
+                  onDelete={deleteTask}
+                  onToggle={toggleReminder}
+                  onCheck={onCheck}
+                />
+                </>
+              )}  />
 </Routes>
-</BrowserRouter>
+
+
+<Footer  />
+
     </div>
+    </BrowserRouter>
 
   );
 }

@@ -1,10 +1,15 @@
 import React from 'react'
+import { Link } from "react-router-dom"
+
+
 
 const Footer = () => {
   return (
-    <div className="ft">
-        <a href="/about">about</a>
-    </div>
+   <div>
+    <Link to='/about' style={{ "backgroundColor" : "red", color: "black" }}>About</Link>
+   </div>
+
+
   )
 }
 

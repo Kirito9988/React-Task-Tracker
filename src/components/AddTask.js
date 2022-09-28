@@ -3,8 +3,10 @@ import { useState } from 'react'
 const AddTask = ({onAdd}) => {
     const [text,setText] = useState('')
     const [day,setDay] = useState('')
-
+    
+    
     const [reminder,setReminder] = useState(false)
+    const [status,setStatus] = useState('active')
 
 
     const onSubmit  = (e) => {
@@ -15,11 +17,11 @@ const AddTask = ({onAdd}) => {
             return
         }
 
-        onAdd({text, day, reminder})
-        //clear
+        onAdd({text, day, reminder, status})
         setText('')
         setDay('')
         setReminder(false)
+        setStatus('active')
     }
   return (
     <form onSubmit={onSubmit} className='add-form'>

@@ -1,25 +1,26 @@
-import PropTypes from 'prop-types'
-import Button from './Button'
-import Tasks from './Tasks'
-const Header = ({title}) => {
-      const onClick = (e) => {
-        console.log(e)
-    }
+import PropTypes from 'prop-types';
+import Button from './Button';
+import { useLocation }from 'react-router-dom';
 
+const Header = ({title,onAdd,showAdd}) => {
+ const location = useLocation()
+ 
   return (
-    <header>
-      <h1>
-        {title}
-      </h1>
-     <Button color={'green'} text='Hello' onClick={onClick} />
-    </header>
+   <header className='header'>
+    <h1>{title}</h1>
+    {location.pathname === '/' && (
+    <Button color={showAdd ? 'red' : 'green'} text={showAdd ? 'Close' : 'Add'} onClick = {onAdd} />
+    )}
+   </header>
   )
-}
+  }
+  Header.defaultProps = {
+    title : 'Task Tracker',
+  }
 
-Header.defaultProps = {
-  title: "Task Trackerr"
-}
-Header.propTypes = {
-  title: PropTypes.string.isRequired,
-}
-export default Header 
+  Header.prototype = {
+    title: PropTypes.string.isRequired,
+  }
+
+
+export default Header

@@ -1,16 +1,25 @@
 {
   "tasks": [
     {
-      "id": 1,
-      "text": "qasasfs",
-      "day": "sfaff",
-      "reminder": true
+      "text": "Doctor Meeting",
+      "day": "29th Feb,2023",
+      "reminder": false,
+      "status": "active",
+      "id": 1
     },
     {
-      "text": "cc",
-      "day": "cc",
+      "id": 2,
+      "text": "School Meeting",
+      "day": "Sept 21th at 2:00pm",
+      "reminder": false,
+      "status": "completed"
+    },
+    {
+      "text": "Office Meeting",
+      "day": "30th Dec,2022 at 11:00pm",
       "reminder": true,
-      "id": 2
+      "status": "completed",
+      "id": 3
     }
   ]
 }
