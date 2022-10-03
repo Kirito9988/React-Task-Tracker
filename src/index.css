@@ -10,16 +10,6 @@ a{
   color: white;
 }
 
-.task {
-  padding: 1rem;
-  margin: 1rem 1rem;
-}
-
-.tasks h3 {
-  margin-left: 1rem;
-  margin-right: 1rem;
-}
-
 .sun {
   display:flex;
   justify-content: center; /* center items horizontally, in this case */
@@ -60,7 +50,7 @@ body {
   max-width: 66vh;
   margin: 1px auto;
   overflow: auto;
-  /* min-height: 300px; */
+  min-height: 300px;
   border: 1px solid steelblue;
   padding: 1px;
   border-radius: 5px;
@@ -105,6 +95,7 @@ body {
 .task {
   background: #f4f4f431;
   margin: 5px;
+  padding: 10px 20px;
   cursor: pointer;
 }
 
@@ -139,9 +130,9 @@ body {
 }
 
 .form-control-check {
-  display: grid;
+  display: flex;
   align-items: center;
-  justify-content:space-around
+  justify-content: space-between;
 }
 
 .form-control-check label {
@@ -176,18 +167,6 @@ footer {
   box-shadow: inset -25px 0px 0 0px #9098a1;
   transition: transform 0.2s ease-in-out;
 }
-
-.icons {
-  display: flex;
-    flex-grow: 1;
-    justify-content: space-evenly;
-}
-
-/* .task.reminder{
-  display: flex;
-  flex-basis: 100%;
-  flex-grow: 100%;
-} */
 
 li {
   position: absolute;
@@ -436,12 +415,6 @@ img{
   width: 100px;
   
 } */
-
-.complete {
-  display: flex;
-  flex-direction: column;
-  min-width: 30vh;
-}
 
 .background-fullviewport{
   right: -50vh;
